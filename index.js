@@ -2,8 +2,8 @@ const boxes = document.querySelectorAll(".box");
 const checkmarks = document.querySelectorAll(".box svg");
 const charnumber = document.querySelector(".number");
 const slider = document.querySelector(".slider");
-const copy = document.querySelector(".copy");
-const strength = document.querySelector(".panel-small p");
+const copyIcon = document.querySelector(".copyIcon");
+const strengthOfPassword = document.querySelector(".panel-small p");
 const columns = document.querySelectorAll(".column");
 const generatorBtn = document.querySelector(".panel-generator");
 const password = document.querySelector(".password");
@@ -14,13 +14,8 @@ let alphabetLower = "abcdefghijklmnopqrstuvxyzabcd";
 let alphabetUpper = alphabetLower.toUpperCase();
 let numbers = "01234567890123456789012345678";
 let symbols = "~`!@#$%^&*()_-+={[}]|:;',>.?/"; 
-
-// //
-
 let arrayPassword = [];
 let count = 0;
-
-// function for generating the Password when clicking the GENERATE button //
 
 const generatingPassword = () => {
     generatorBtn.onclick = () => {
@@ -28,13 +23,11 @@ const generatingPassword = () => {
         let randarray = []; 
         let arrayPassword = [];
         let number = document.querySelectorAll(".checked").length;
-        // for loop with that has the sliders value as its stop sign //
         for(let i = 1; i <= slider.value; i++) {
             // generating a random variable for each iteration in the loop //
             randNumbers = Math.floor(Math.random() * 29);   
                 if(arrayPassword.length < 10) {
                     randarray = [];
-                    // appending a random array with 
                     if(boxes[0].classList.contains("checked")) {
                         randarray.push(alphabetUpper);
                     }
@@ -47,36 +40,25 @@ const generatingPassword = () => {
                     if(boxes[3].classList.contains("checked")) {
                         randarray.push(symbols);
                     } 
-                    /* appending the password with a random first index according to the length of the array 
-                    and a second index according to the randNumbers variable */
                     arrayPassword.push(randarray[(Math.floor(Math.random() * number))][randNumbers])
                 }  
-                // making the array a string and also making it visible in the HTML //
                 password.innerHTML = arrayPassword.join("");
     }
 }
 }
 
-generatingPassword();
-
-copy.onclick = () => {
-    console.log("learn async")
-}
-
-// function for calculating and showing the strength of the password //
-
-const passwordStrength = () => {
+const passwordstrengthOfPassword = () => {
     let length = document.querySelectorAll(".checked").length;
     let finalscore;
 
-    // Points that are added to the strength of the password //
+    // Points that are added to the strengthOfPassword of the password //
 
     let Ch_number =  slider.value * 4;  // +(n*4) number of characters //
     let letter_score = (slider.value - (slider.value)/length) * 2; // +((len-n)*2) total of uppercase/lowercase letters //
     let numbers_score = (slider.value)/length * 4;   // +(n*4) total of numbers //
     let symbols_score = (slider.value)/length * 6;   // +(n*6) total of symbols//
 
-    // Points that are subtracted to the strength of the password //
+    // Points that are subtracted to the strengthOfPassword of the password //
 
     let letter_number_only = slider.value * -1; // -n letters/numbers only //
     let consecutive_char = slider.value * -2;   // -(n*2) consecutive letters/numbers //
@@ -97,28 +79,21 @@ const passwordStrength = () => {
                 let symbols_score = 6 * slider.value;
                 finalscore = Ch_number + symbols_score;
             }
-        
         } else if(length == 2)  {
             if(upper && lower) {
                 finalscore = letter_score + letter_score + letter_number_only + Ch_number;
-
             } else if(upper && numbr || lower && numbr) {
                 finalscore = letter_score + numbers_score + Ch_number;
-
             } else if(upper && symbol || lower && symbol) {
                 finalscore = letter_score + symbols_score + Ch_number;
-
             } else if(numbr && symbol) {
                 finalscore = numbers_score + symbols_score + Ch_number;
             }
-
         } else if(length == 3)  {
             if(upper == false || lower == false) {
                 finalscore = letter_score + numbers_score + symbols_score + Ch_number;
-
             } else if(numbr == false) {
                 finalscore = letter_score + letter_score + symbols_score + Ch_number;
-
             } else if(symbol == false) {
                 finalscore = letter_score + letter_score + numbers_score + Ch_number;
             } 
@@ -129,45 +104,37 @@ const passwordStrength = () => {
         // Determining which score determines how strong the password should be and changing the HTML text thereafter //
         }
         if(finalscore < 45) {
-            strength.innerHTML = "VERY WEAK";
+            strengthOfPassword.innerHTML = "VERY WEAK";
         } else if(finalscore < 55) {
-            strength.innerHTML = "WEAK";
+            strengthOfPassword.innerHTML = "WEAK";
         } else if(finalscore < 75) {
-            strength.innerHTML = "MEDIUM";
+            strengthOfPassword.innerHTML = "MEDIUM";
         } else if(finalscore < 150) {
-            strength.innerHTML = "STRONG";
+            strengthOfPassword.innerHTML = "STRONG";
         }
 }
 
-setInterval(passwordStrength, 0);
-
-// function for coloring columns according to the strength of the password //
-
 const fillingColumns = () => {
     for(let i = 0; i < columns.length; i++) {
-        if(strength.innerHTML == "VERY WEAK") {
+        if(strengthOfPassword.innerHTML == "VERY WEAK") {
             columns[0].style.backgroundColor = "#FB7C58";
             columns[1].style.backgroundColor = "#18171F";
             columns[2].style.backgroundColor = "#18171F";
             columns[3].style.backgroundColor = "#18171F";
-        } else if(strength.innerHTML == "WEAK") {
+        } else if(strengthOfPassword.innerHTML == "WEAK") {
             columns[0].style.backgroundColor = "#FB7C58";
             columns[1].style.backgroundColor = "#FB7C58";
-        } else if(strength.innerHTML == "MEDIUM") {
+        } else if(strengthOfPassword.innerHTML == "MEDIUM") {
             columns[0].style.backgroundColor = "#FB7C58";
             columns[1].style.backgroundColor = "#FB7C58";
             columns[2].style.backgroundColor = "#FB7C58";
             columns[3].style.backgroundColor = "#18171F";
-        } else if(strength.innerHTML == "STRONG") {
+        } else if(strengthOfPassword.innerHTML == "STRONG") {
             columns[i].style.backgroundColor = "#FB7C58";
         }
     }
 
 }
-
-setInterval(fillingColumns, 0);
-
-// function for when clicking boxes //
 
 const clickingBoxes = () => {
     for(let i = 0; i < boxes.length; i++) {
@@ -229,29 +196,30 @@ const clickingBoxes = () => {
     }
 }
 
-clickingBoxes();
 
-// making the slider two colored with a linear gradient //
 
 const adjustSlider = () => {
+
+    // making the slider two colored with a linear gradient //
     const minVal = slider.min;
     const maxVal = slider.max;
     const val = ((slider.value - minVal) * 100) / (maxVal - minVal)
     const fillLeft = "#A4FFAF";
     const fillRight = "#18171F";
-    
     slider.style.background = `linear-gradient(to right, ${fillLeft} ${val}%, ${fillRight} ${val}%)`
 }
-
-slider.addEventListener("input", adjustSlider);
-
-adjustSlider();
-
-// adjusting character length according to where the slider is positioned //
 
 const adjustCharLength = () => {
     charnumber.innerHTML = slider.value;
 }
 
-setInterval(adjustCharLength, 0)
+document.addEventListener("DOMContentLoaded", () => {
+    generatingPassword();
+    setInterval(passwordstrengthOfPassword, 0);
+    setInterval(fillingColumns, 0);
+    clickingBoxes();
+    slider.addEventListener("input", adjustSlider);
+    adjustSlider();
+    setInterval(adjustCharLength, 0)
+})
 
