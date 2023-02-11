@@ -2,7 +2,7 @@ const boxes = document.querySelectorAll(".box");
 const checkmarks = document.querySelectorAll(".box svg");
 const charnumber = document.querySelector(".number");
 const slider = document.querySelector(".slider");
-const copyIcon = document.querySelector(".copyIcon");
+const copyIcon = document.querySelector(".copy");
 const strengthOfPassword = document.querySelector(".panel-small p");
 const columns = document.querySelectorAll(".column");
 const generatorBtn = document.querySelector(".panel-generator");
@@ -46,6 +46,20 @@ const generatingPassword = () => {
     }
 }
 }
+
+const copyText = () => {
+    copyIcon.onclick = () => {
+      const copyContent = async () => {
+        try {
+          await navigator.clipboard.writeText(password.innerHTML);
+          console.log("content copeid to clipboard")
+        } catch(error) {
+          console.log("Failed to copy", error)
+        }
+      }
+      copyContent();
+    }
+  }
 
 const passwordstrengthOfPassword = () => {
     let length = document.querySelectorAll(".checked").length;
@@ -220,6 +234,7 @@ document.addEventListener("DOMContentLoaded", () => {
     clickingBoxes();
     slider.addEventListener("input", adjustSlider);
     adjustSlider();
-    setInterval(adjustCharLength, 0)
+    setInterval(adjustCharLength, 0);
+    copyText();
 })
 
