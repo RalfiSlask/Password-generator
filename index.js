@@ -1,11 +1,11 @@
 const boxes = document.querySelectorAll(".box");
 const checkmarks = document.querySelectorAll(".box svg");
-const charnumber = document.querySelector(".number");
+const numberOfCharacters = document.querySelector(".number");
 const slider = document.querySelector(".slider");
-const copyIcon = document.querySelector(".copy");
+const copyButton = document.querySelector(".copy");
 const strengthOfPassword = document.querySelector(".panel-small p");
 const columns = document.querySelectorAll(".column");
-const generatorBtn = document.querySelector(".panel-generator");
+const generatorButton = document.querySelector(".panel-generator");
 const password = document.querySelector(".password");
 
 // variables containing letters, numbers and symbols //
@@ -18,29 +18,29 @@ let arrayPassword = [];
 let count = 0;
 
 const generatingPassword = () => {
-    generatorBtn.onclick = () => {
+    generatorButton.onclick = () => {
         let randNumbers;
-        let randarray = []; 
+        let randomArray = []; 
         let arrayPassword = [];
         let number = document.querySelectorAll(".checked").length;
         for(let i = 1; i <= slider.value; i++) {
             // generating a random variable for each iteration in the loop //
             randNumbers = Math.floor(Math.random() * 29);   
                 if(arrayPassword.length < 10) {
-                    randarray = [];
+                    randomArray = [];
                     if(boxes[0].classList.contains("checked")) {
-                        randarray.push(alphabetUpper);
+                        randomArray.push(alphabetUpper);
                     }
                     if(boxes[1].classList.contains("checked")) {
-                        randarray.push(alphabetLower);
+                        randomArray.push(alphabetLower);
                     }
                     if(boxes[2].classList.contains("checked")) {
-                        randarray.push(numbers);
+                        randomArray.push(numbers);
                     }
                     if(boxes[3].classList.contains("checked")) {
-                        randarray.push(symbols);
+                        randomArray.push(symbols);
                     } 
-                    arrayPassword.push(randarray[(Math.floor(Math.random() * number))][randNumbers])
+                    arrayPassword.push(randomArray[(Math.floor(Math.random() * number))][randNumbers])
                 }  
                 password.innerHTML = arrayPassword.join("");
     }
@@ -48,7 +48,7 @@ const generatingPassword = () => {
 }
 
 const copyText = () => {
-    copyIcon.onclick = () => {
+    copyButton.onclick = () => {
       const copyContent = async () => {
         try {
           await navigator.clipboard.writeText(password.innerHTML);
@@ -224,7 +224,7 @@ const adjustSlider = () => {
 }
 
 const adjustCharLength = () => {
-    charnumber.innerHTML = slider.value;
+    numberOfCharacters.innerHTML = slider.value;
 }
 
 document.addEventListener("DOMContentLoaded", () => {
